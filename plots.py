@@ -3,6 +3,8 @@ import numpy as np
 from ipywidgets import interact
 import matplotlib.animation as animation
 from matplotlib import pyplot as plt
+from matplotlib import cm
+from matplotlib.ticker import LinearLocator
 
 
 # Plots (simpel)
@@ -92,3 +94,41 @@ def animate(U):
 
     from IPython.display import HTML
     return HTML(ani.to_jshtml())
+
+def plot_3d(U):
+    fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+
+    t_step_size = int((len(c.t_g)-1)/(len(c.x_g)-1))
+
+    offset = 1
+
+    X, Y = np.meshgrid(
+        c.x_g[:-1][offset:], 
+        c.t_g[t_step_size::t_step_size][offset:]
+        )
+    Z = U.U
+    Z = Z[:-1][::t_step_size]
+    Z = Z[offset:,offset+1:]
+    Z = np.swapaxes(Z,0,1)
+
+
+    # Plot the surface.
+    surf = ax.plot_surface( 
+        X, 
+        Y, 
+        Z,
+        cmap=cm.coolwarm,
+        antialiased=False, 
+        lw=0.5, 
+        rstride=8, 
+        cstride=8,
+        alpha=0.6)
+
+    # # Customize the z axis.
+    ax.set_zlim(0, 2)
+    ax.contourf(X, Y, Z, zdir='x', offset=1, cmap='coolwarm')
+
+    # Add a color bar which maps values to colors.
+    
+
+    plt.show()

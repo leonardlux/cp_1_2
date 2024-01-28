@@ -12,8 +12,8 @@ n_x = 200 +1
 # +1 one because we want to include the 0 and still have a nice spacing
 
 x_min = -1
-x_max = 1
-x_0 = 0.5
+x_max =  1
+x_0   = 0.5
 
 # globaly used steps for x
 x_g, dx = np.linspace(x_min,x_max,n_x,retstep=True,dtype=dtype)
@@ -39,16 +39,11 @@ initial_commulative_mass = 1
 # +1 for the initial state
 
 
-
-# used for the approx of dirac delta by gaussian
-sigma_approx = 0.001
-
 # diffusion parameter:
 D_c = 1
 # Task 2.9 
-D_minus = 1
-D_plus  = 2
-
+D_minus =  2
+D_plus  =  1
 
 # calculate and print out alpha
 alpha = (D_c*dt)/dx**2/2

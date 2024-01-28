@@ -30,37 +30,6 @@ def gen_matricies(diags_gen,d_func, boundary_condition):
     B = build_matrix_from_diag(b_diags)
     return A,B
 
-# # generate the matricies 
-# def gen_matricies(boundary_conditions,d_func = None):
-
-#     def build_matrix_from_diag(sub_diag, main_diag, sup_diag):
-#         """
-#         generates the following Matrix
-#             | main_1 side_1    0        ...       0
-#             | side_1 main_2  side_2     ...      ...
-#         M = |   0    side_2   ...       ...      ...
-#             |  ...    ...     ...     side_N-1    0
-#             |  ...    ...   side_N-1  main_N-1  side_N
-#             |   0     ...      0       side_N   main_N
-#         """
-#         M = diags((sub_diag, main_diag, sup_diag), offsets = (-1, 0, 1), dtype=c.dtype)# .toarray()
-#         return M
-
-#     # A 
-#     A_main_diag = np.ones(c.n_x  , dtype=c.dtype) * ( 1 + 2 * c.alpha)
-#     A_side_diag = np.ones(c.n_x-1, dtype=c.dtype) * (-1 * c.alpha)
-
-#     # boundary conditions
-#     A = build_matrix_from_diag(*boundary_conditions(A_main_diag,A_side_diag,"A"))
-
-#     # B 
-#     B_main_diag = np.ones(c.n_x  , dtype=c.dtype) * ( 1 - 2 * c.alpha)
-#     B_side_diag = np.ones(c.n_x-1, dtype=c.dtype) * ( 1 * c.alpha)
-
-#     # boundary conditions
-#     B = build_matrix_from_diag(*boundary_conditions(B_main_diag,B_side_diag,"B"))
-
-#     return A, B
 
 #taken from github of this course, after scipy did not work :( 
 @jit(nopython = True)
@@ -131,10 +100,10 @@ def solve_simulation(parameter: dict):
 
 class Simulation:
     def __init__(self,
-                distribution        : str  = "d",
-                diags_gen           : str  = "s",
-                d_func              : str  = "c",
-                boundary_condition  : str  = "n", 
+                distribution        : str  = "dirac",
+                diags_gen           : str  = "simpel",
+                d_func              : str  = "constant",
+                boundary_condition  : str  = "dirichlet", 
                 overwrite           : bool = False,
                 data_dict           : dict = {},
                 ) -> None:

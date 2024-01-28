@@ -14,15 +14,11 @@ def __analytical_solution_unwrapped(t,x):
     u = c.initial_commulative_mass/np.sqrt(4*np.pi*c.D_c*t) * np.exp(-1*(x-c.x_0)**2 /(4*c.D_c*t))
     return u
 
-def analytical_solution(t,x,renomarlize = False):
+def analytical_solution(t,x):
     #wrapped because i am to lazy for np.frompyfunc
     U = np.zeros((len(t),len(x)))
     for i, t_ in enumerate(t[1:]):
         U[i] = __analytical_solution_unwrapped(t_,x)
-
-    if renomarlize:
-        # renormalization:
-        U = U/np.sum(U[0])*c.initial_commulative_mass
     return U 
 
 
