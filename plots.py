@@ -125,7 +125,7 @@ def plot_3d(U):
         alpha=0.6)
 
     # # Customize the z axis.
-    ax.set_zlim(0, 2)
+    ax.set_zlim(0, 3)
     ax.contourf(X, Y, Z, zdir='x', offset=1, cmap='coolwarm')
 
     # Add a color bar which maps values to colors.
