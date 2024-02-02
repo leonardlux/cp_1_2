@@ -105,6 +105,7 @@ class Simulation:
                 d_func              : str  = "constant",
                 boundary_condition  : str  = "dirichlet", 
                 overwrite           : bool = False,
+                title               : str  = "",
                 data_dict           : dict = {},
                 ) -> None:
         """
@@ -130,6 +131,8 @@ class Simulation:
                 self.sim_para["diags_gen"] = opt_dg.diags_gen_general_version
             elif diags_gen in "simpel":
                 self.sim_para["diags_gen"] = opt_dg.diags_gen_simple_version
+            elif diags_gen in "constant":
+                self.sim_para["diags_gen"] = opt_dg.diags_gen_constant_version
             else: raise ValueError
 
             # D(x) Function
@@ -137,6 +140,8 @@ class Simulation:
                 self.sim_para["d_func"] = opt_df.diffusivity_const
             elif d_func in "step":
                 self.sim_para["d_func"] = opt_df.diffusivity_step
+            elif d_func in "special":
+                self.sim_para["d_func"] = opt_df.diffusivity_special
             else: raise ValueError
 
             # Boundary Condtions
@@ -147,13 +152,21 @@ class Simulation:
                 self.sim_para["boundary_condition"]  = opt_bc.boundary_conditions_dirichlet
                 self.bc_name = "Dirichlet"
             else: raise ValueError
+
+            if title !="":
+                self.title = title
+            else: 
+                self.title = f"BC: {self.bc_name}, Distr.: {self.dist_name}"
             
             # Solve Simulation
             self.U = solve_simulation(self.sim_para)
-            self.title = f"BC: {self.bc_name}, Distr.: {self.dist_name}"
         pass
 
-    
+    def renormalize(self):
+        # we normalized based on the sum of t = 2 because there we dont have to take into account the border contions
+        self.U = self.U / np.sum(self.U[2]) * 100
+        #scale to procent
+
     def plot_mass(self):
         plot_mass(self.U,self.title)
     
