@@ -25,10 +25,9 @@ x_g, dx = np.linspace(x_min,x_max,n_x,retstep=True,dtype=dtype)
 dt = 0.00001
 
 t_min = 0
-t_max = 0.5
+t_max = 1
 
 n_t = int((t_max-t_min)/dt) +1 +1
-# +1 to round up, second +1, because we also need to count 0
 
 # globaly used steps for t
 t_g = np.arange(0,n_t,dtype=dtype) * dt
@@ -42,9 +41,9 @@ initial_commulative_mass = 1
 # diffusion parameter:
 D_c = 1
 # Task 2.9 
-D_minus =  1
-D_plus  =  3
-x_step = 0.1
+D_minus =  5
+D_plus  =  1
+x_step = 0
 
 # calculate and print out alpha
 alpha = (D_c*dt)/dx**2/2
